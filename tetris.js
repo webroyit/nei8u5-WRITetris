@@ -66,10 +66,21 @@ function update(time = 0){
 
     // update the dom
     requestAnimationFrame(update);
+}
 
+function merge(grid, player){
+    player.matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if(value !== 0){
+                grid[y + player.position.y][x + player.position.x] = value;
+            }
+        })
+    })
 }
 
 const grid = createMatrix(12, 20);
+
+console.table(grid);
 
 const player = {
     position: {x: 4, y: 0},
