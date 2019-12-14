@@ -15,6 +15,21 @@ const matrix = [
     [0, 1, 0],
 ];
 
+function collide(grid, player){
+    const [mtrix, pos] = [player.matrix, player.position];
+
+    for(let y = 0; y < mtrix.length; ++y){
+        for(let x = 0; x < mtrix.length; ++x){
+            // check if the shape in the grid exist
+            if(mtrix[y][x] !== 0 && (grid[y + pos.y] && grid[y + pos.y][x + pos.x]) !== 0){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 // save the shape
 function createMatrix(w, h){
     const matrixList = [];
@@ -59,6 +74,11 @@ function update(time = 0){
     // move the shape down by 1 space for every second
     if(dropCounter > dropInterval){
         player.position.y++;
+        if(collide(grid, player)){
+            player.position.y--;
+            merge(grid, player)
+            player.position.y = 0;
+        }
         dropCounter = 0;
     }
 
@@ -100,6 +120,11 @@ document.addEventListener("keydown", event => {
     // move down
     else if(event.keyCode === 40){
         player.position.y++;
+        if(collide(grid, player)){
+            player.position.y--;
+            merge(grid, player)
+            player.position.y = 0;
+        }
         // reset the drop down timer
         dropCounter = 0;
     }
