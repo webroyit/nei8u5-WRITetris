@@ -47,6 +47,7 @@ function draw(){
     context.fillStyle = "#e6f2ff";   // add color
     context.fillRect(0, 0, canvas.width, canvas.height);    // add sizes to make a rectangle shape
 
+    drawMatrix(grid, {x: 0, y: 0});
     drawMatrix(player.matrix, player.position);
 }
 
