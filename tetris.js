@@ -1,3 +1,7 @@
+let lastTime = 0;
+let dropCounter = 0;
+let dropInterval = 1000;
+
 const canvas = document.getElementById("tetris");
 const context = canvas.getContext("2d");
 
@@ -35,16 +39,27 @@ function drawMatrix(matrix, offset){
 }
 
 // update the position of the shape
-function update(){
+function update(time = 0){
+    // keep track of time
+    const deltaTime = time - lastTime;
+    lastTime = time;
+    dropCounter += deltaTime;
+
+    // move the shape down by 1 space for every second
+    if(dropCounter > dropInterval){
+        player.position.y++;
+        dropCounter = 0;
+    }
+
     draw();
-    
+
     // update the dom
     requestAnimationFrame(update);
 
 }
 
 const player = {
-    position: {x: 5, y: 3},
+    position: {x: 4, y: 0},
     matrix: matrix
 }
 
