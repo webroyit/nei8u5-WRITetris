@@ -73,7 +73,7 @@ function update(time = 0){
 
     // move the shape down by 1 space for every second
     if(dropCounter > dropInterval){
-        playerDrop()
+        playerDrop();
     }
 
     draw();
@@ -95,13 +95,26 @@ function merge(grid, player){
 
 function playerDrop(){
     player.position.y++;
+
+    // when it hit the ground, it add the shape to the grid
     if(collide(grid, player)){
         player.position.y--;
         merge(grid, player)
+
+        // start the next shape on the top
         player.position.y = 0;
     }
     // reset the drop down timer
     dropCounter = 0;
+}
+
+function playerMove(dir){
+    player.position.x += dir;
+
+    // move the shape back if it hits the wall or other shape when moving to the left or right
+    if(collide(grid, player)){
+        player.position.x -= dir;
+    }
 }
 
 const grid = createMatrix(12, 20);
@@ -115,11 +128,11 @@ const player = {
 document.addEventListener("keydown", event => {
     // move left
     if(event.keyCode === 37){
-        player.position.x--;
+        playerMove(-1);
     }
     // move right
     else if(event.keyCode === 39){
-        player.position.x++;
+        playerMove(1);
     }
     // move down
     else if(event.keyCode === 40){
