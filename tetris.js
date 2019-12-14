@@ -15,6 +15,17 @@ const matrix = [
     [0, 1, 0],
 ];
 
+// save the shape
+function createMatrix(w, h){
+    const matrixList = [];
+
+    while(h--){
+        matrixList.push(new Array(w).fill(0));
+    }
+
+    return matrixList;
+}
+
 // add the shape to the board
 function draw(){
     // styles the context
@@ -57,6 +68,8 @@ function update(time = 0){
     requestAnimationFrame(update);
 
 }
+
+const grid = createMatrix(12, 20);
 
 const player = {
     position: {x: 4, y: 0},
