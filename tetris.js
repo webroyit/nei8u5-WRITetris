@@ -63,4 +63,22 @@ const player = {
     matrix: matrix
 }
 
+// for keyboard
+document.addEventListener("keydown", event => {
+    // move left
+    if(event.keyCode === 37){
+        player.position.x--;
+    }
+    // move right
+    else if(event.keyCode === 39){
+        player.position.x++;
+    }
+    // move down
+    else if(event.keyCode === 40){
+        player.position.y++;
+        // reset the drop down timer
+        dropCounter = 0;
+    }
+})
+
 update();
