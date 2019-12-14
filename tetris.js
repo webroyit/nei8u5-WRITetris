@@ -117,6 +117,33 @@ function playerMove(dir){
     }
 }
 
+function playerRotate(dir){
+    rotate(player.matrix, dir);
+}
+
+function rotate(matrix, dir){
+    // transpose - swap the row and the column
+    for(let y = 0; y < matrix.length; ++y){
+        for(let x = 0; x < y; ++x){
+            [
+                matrix[x][y],
+                matrix[y][x]
+            ] = [
+                matrix[y][x],
+                matrix[x][y]
+            ]
+        }
+    }
+
+    // reverse each row
+    if(dir > 0){
+        matrix.forEach(row => row.reverse());
+    }
+    else{
+        matrix.reverse();
+    }
+}
+
 const grid = createMatrix(12, 20);
 
 const player = {
@@ -137,6 +164,14 @@ document.addEventListener("keydown", event => {
     // move down
     else if(event.keyCode === 40){
         playerDrop();
+    }
+    // q - rotate the shape to the left
+    else if(event.keyCode === 81){
+        playerRotate(-1);
+    }
+    // w - rotate the shape to the right
+    else if(event.keyCode === 87){
+        playerRotate(1);
     }
 })
 
