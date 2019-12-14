@@ -65,7 +65,6 @@ function drawMatrix(matrix, offset){
     });
 }
 
-// update the position of the shape
 function update(time = 0){
     // keep track of time
     const deltaTime = time - lastTime;
@@ -74,13 +73,7 @@ function update(time = 0){
 
     // move the shape down by 1 space for every second
     if(dropCounter > dropInterval){
-        player.position.y++;
-        if(collide(grid, player)){
-            player.position.y--;
-            merge(grid, player)
-            player.position.y = 0;
-        }
-        dropCounter = 0;
+        playerDrop()
     }
 
     draw();
@@ -89,6 +82,7 @@ function update(time = 0){
     requestAnimationFrame(update);
 }
 
+// add the current shape to the grid
 function merge(grid, player){
     player.matrix.forEach((row, y) => {
         row.forEach((value, x) => {
@@ -99,9 +93,18 @@ function merge(grid, player){
     })
 }
 
-const grid = createMatrix(12, 20);
+function playerDrop(){
+    player.position.y++;
+    if(collide(grid, player)){
+        player.position.y--;
+        merge(grid, player)
+        player.position.y = 0;
+    }
+    // reset the drop down timer
+    dropCounter = 0;
+}
 
-console.table(grid);
+const grid = createMatrix(12, 20);
 
 const player = {
     position: {x: 4, y: 0},
@@ -120,14 +123,7 @@ document.addEventListener("keydown", event => {
     }
     // move down
     else if(event.keyCode === 40){
-        player.position.y++;
-        if(collide(grid, player)){
-            player.position.y--;
-            merge(grid, player)
-            player.position.y = 0;
-        }
-        // reset the drop down timer
-        dropCounter = 0;
+        playerDrop();
     }
 })
 
