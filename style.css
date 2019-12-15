@@ -2,6 +2,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    /* disable the double-tap zoom in browser on mobile devices */
+    touch-action: manipulation;
 }
 
 h1{
