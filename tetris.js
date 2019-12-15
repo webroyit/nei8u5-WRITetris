@@ -8,13 +8,6 @@ const context = canvas.getContext("2d");
 // make the shape bigger
 context.scale(20, 20);
 
-// create the layout of the shapes
-const matrix = [
-    [0, 0, 0],
-    [1, 1, 1],
-    [0, 1, 0],
-];
-
 function collide(grid, player){
     const [mtrix, pos] = [player.matrix, player.position];
 
@@ -41,6 +34,58 @@ function createMatrix(w, h){
     return matrixList;
 }
 
+function createPiece(type){
+    if(type === "T"){
+        return [
+            [0, 0, 0],
+            [1, 1, 1],
+            [0, 1, 0]
+        ];
+    }
+    else if(type === "L"){
+        return [
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 1]
+        ];
+    }
+    else if(type === "J"){
+        return [
+            [0, 1, 0],
+            [0, 1, 0],
+            [1, 1, 0]
+        ];
+    }
+    else if(type === "O"){
+        return [
+            [1, 1],
+            [1, 1]
+        ];
+    }
+    else if(type === "S"){
+        return [
+            [0, 1, 1],
+            [1, 1, 0],
+            [0, 0, 0]
+        ];
+    }
+    else if(type === "Z"){
+        return [
+            [1, 1, 0],
+            [0, 1, 1],
+            [0, 0, 0]
+        ];
+    }
+    else if(type === "I"){
+        return [
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0]
+        ];
+    }
+}
+
 // add the shape to the board
 function draw(){
     // styles the context
@@ -56,7 +101,7 @@ function drawMatrix(matrix, offset){
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if(value !== 0){
-                context.fillStyle = "red";
+                context.fillStyle = "green";
                 // x for left
                 // y for top
                 context.fillRect(x + offset.x, y + offset.y, 1, 1);
@@ -163,7 +208,7 @@ const grid = createMatrix(12, 20);
 
 const player = {
     position: {x: 4, y: 0},
-    matrix: matrix
+    matrix: createPiece("Z")
 }
 
 // for keyboard
