@@ -119,6 +119,7 @@ function drawMatrix(matrix, offset){
 
 // clear the row if it filled
 function gridSweep(){
+    let rowCount = 1;
     outer: for(let y = grid.length - 1; y > 0; --y){
         for(let x = 0; x < grid[y].length; ++x){
             if(grid[y][x] === 0){
@@ -130,6 +131,10 @@ function gridSweep(){
         const row = grid.splice(y, 1)[0].fill(0);
         grid.unshift(row);
         ++y;
+
+        // give the player the point
+        player.score += rowCount * 10;
+        rowCount *= 2;
     }
 }
 
@@ -148,6 +153,11 @@ function update(time = 0){
 
     // update the dom
     requestAnimationFrame(update);
+}
+
+// update the player score
+function updateScore(){
+    document.getElementById('score').innerText = player.score;
 }
 
 // add the current shape to the grid
@@ -173,6 +183,8 @@ function playerReset(){
     // clear the grid 
     if(collide(grid, player)){
         grid.forEach(row => row.fill(0));
+        player.score = 0;
+        updateScore();
     }
 }
 
@@ -185,6 +197,7 @@ function playerDrop(){
         merge(grid, player)
         playerReset();
         gridSweep();
+        updateScore();
     }
     // reset the drop down timer
     dropCounter = 0;
@@ -255,8 +268,9 @@ const colors = [
 const grid = createMatrix(12, 20);
 
 const player = {
-    position: {x: 4, y: 0},
-    matrix: createPiece("Z")
+    position: {x: 0, y: 0},
+    matrix: null,
+    score: 0
 }
 
 // for keyboard
@@ -289,4 +303,5 @@ buttonRight.addEventListener('click', () => playerMove(1));
 buttonRotateLeft.addEventListener('click', () => playerRotate(-1));
 buttonRotateRight.addEventListener('click', () => playerRotate(1));
 
+playerReset();
 update();

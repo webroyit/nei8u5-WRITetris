@@ -41,6 +41,11 @@ h1{
     font-weight: bold;
 }
 
+.board__score{
+    margin-top: 2rem;
+    font-size: 1.3rem;
+}
+
 .controller{
     padding: 1rem 2rem;
 }
