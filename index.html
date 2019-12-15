@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Tetris</title>
 </head>
 <body>
-    <canvas id="tetris" width="240" height="400"></canvas>
+    <div class="container">
+        <canvas id="tetris" width="240" height="400"></canvas>
+        <div class="board">
+            <h2>How to play?</h2>
+            <p class="board__subtitle">Use the keyboard</p>
+            <p>- Direction Pad to move the shape piece</p>
+            <p>- Q to rotate to the left</p>
+            <p>- W to rotate to the right</p>
+        </div>
+    </div>
     <script src="tetris.js"></script>
 </body>
 </html>
