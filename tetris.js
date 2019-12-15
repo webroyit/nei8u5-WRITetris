@@ -152,6 +152,10 @@ function playerReset(){
     // put the new shape piece on the top center of the grid 
     player.position.y = 0;
     player.position.x = (grid[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+
+    if(collide(grid, player)){
+        grid.forEach(row => row.fill(0));
+    }
 }
 
 function playerDrop(){
