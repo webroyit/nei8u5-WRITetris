@@ -2,6 +2,12 @@ let lastTime = 0;
 let dropCounter = 0;
 let dropInterval = 1000;
 
+const buttonLeft = document.getElementById("button-left");
+const buttonDown = document.getElementById("button-down");
+const buttonRight = document.getElementById("button-right");
+const buttonRotateLeft = document.getElementById("button-rotateLeft");
+const buttonRotateRight = document.getElementById("button-rotateRight");
+
 const canvas = document.getElementById("tetris");
 const context = canvas.getContext("2d");
 
@@ -242,5 +248,11 @@ document.addEventListener("keydown", event => {
         playerRotate(1);
     }
 })
+
+buttonLeft.addEventListener('click', () => playerMove(-1));
+buttonDown.addEventListener('click', () => playerDrop());
+buttonRight.addEventListener('click', () => playerMove(1));
+buttonRotateLeft.addEventListener('click', () => playerRotate(-1));
+buttonRotateRight.addEventListener('click', () => playerRotate(1));
 
 update();
