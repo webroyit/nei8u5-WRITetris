@@ -40,6 +40,7 @@ function createMatrix(w, h){
     return matrixList;
 }
 
+// shape layout
 function createPiece(type){
     if(type === "T"){
         return [
@@ -50,44 +51,44 @@ function createPiece(type){
     }
     else if(type === "L"){
         return [
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 1]
+            [0, 2, 0],
+            [0, 2, 0],
+            [0, 2, 2]
         ];
     }
     else if(type === "J"){
         return [
-            [0, 1, 0],
-            [0, 1, 0],
-            [1, 1, 0]
+            [0, 3, 0],
+            [0, 3, 0],
+            [3, 3, 0]
         ];
     }
     else if(type === "O"){
         return [
-            [1, 1],
-            [1, 1]
+            [4, 4],
+            [4, 4]
         ];
     }
     else if(type === "S"){
         return [
-            [0, 1, 1],
-            [1, 1, 0],
+            [0, 5, 5],
+            [5, 5, 0],
             [0, 0, 0]
         ];
     }
     else if(type === "Z"){
         return [
-            [1, 1, 0],
-            [0, 1, 1],
+            [6, 6, 0],
+            [0, 6, 6],
             [0, 0, 0]
         ];
     }
     else if(type === "I"){
         return [
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0]
+            [0, 7, 0, 0],
+            [0, 7, 0, 0],
+            [0, 7, 0, 0],
+            [0, 7, 0, 0]
         ];
     }
 }
@@ -107,7 +108,7 @@ function drawMatrix(matrix, offset){
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if(value !== 0){
-                context.fillStyle = "green";
+                context.fillStyle = colors[value];
                 // x for left
                 // y for top
                 context.fillRect(x + offset.x, y + offset.y, 1, 1);
@@ -153,6 +154,7 @@ function playerReset(){
     player.position.y = 0;
     player.position.x = (grid[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
 
+    // clear the grid 
     if(collide(grid, player)){
         grid.forEach(row => row.fill(0));
     }
@@ -221,6 +223,17 @@ function rotate(matrix, dir){
         matrix.reverse();
     }
 }
+
+const colors = [
+    null,
+    "#6666ff",
+    "#e066ff",
+    "#ff66a3",
+    "#ff5c33",
+    "#ffff00",
+    "#00cc00",
+    "#5c8a8a"
+]
 
 const grid = createMatrix(12, 20);
 
