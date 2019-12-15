@@ -138,6 +138,16 @@ function merge(grid, player){
     })
 }
 
+// create random shape piece
+function playerReset(){
+    const pieces = "TLJOSZI";
+    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+
+    // put the new shape piece on the top center of the grid 
+    player.position.y = 0;
+    player.position.x = (grid[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+}
+
 function playerDrop(){
     player.position.y++;
 
@@ -145,9 +155,7 @@ function playerDrop(){
     if(collide(grid, player)){
         player.position.y--;
         merge(grid, player)
-
-        // start the next shape on the top
-        player.position.y = 0;
+        playerReset();
     }
     // reset the drop down timer
     dropCounter = 0;
