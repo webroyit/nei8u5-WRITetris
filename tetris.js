@@ -117,6 +117,22 @@ function drawMatrix(matrix, offset){
     });
 }
 
+// clear the row if it filled
+function gridSweep(){
+    outer: for(let y = grid.length - 1; y > 0; --y){
+        for(let x = 0; x < grid[y].length; ++x){
+            if(grid[y][x] === 0){
+                // goes to the next row if it not filled
+                continue outer;
+            }
+        }
+        // remove that row and add a new empty row to the top
+        const row = grid.splice(y, 1)[0].fill(0);
+        grid.unshift(row);
+        ++y;
+    }
+}
+
 function update(time = 0){
     // keep track of time
     const deltaTime = time - lastTime;
@@ -168,6 +184,7 @@ function playerDrop(){
         player.position.y--;
         merge(grid, player)
         playerReset();
+        gridSweep();
     }
     // reset the drop down timer
     dropCounter = 0;
