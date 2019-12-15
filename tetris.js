@@ -118,7 +118,22 @@ function playerMove(dir){
 }
 
 function playerRotate(dir){
+    const pos = player.position.x;
+    let offset = 1;
     rotate(player.matrix, dir);
+
+    while(collide(grid, player)){
+        player.position.x += offset;
+        // check if there is collision when rotating
+        offset = -(offset + (offset > 0 ? 1 : -1));
+
+        // move back the shape
+        if(offset > player.matrix[0].length){
+            rotate(player.matrix, -dir);
+            player.position.x = pos;
+            return;
+        }
+    }
 }
 
 function rotate(matrix, dir){
