@@ -7,14 +7,19 @@
 }
 
 h1{
-    font-size: 2rem;
+    font-size: 3rem;
     text-align: center;
     margin-top: .5rem;
 }
 
 .home{
-    width: 30rem;
+    width: 27rem;
     margin: auto;
+}
+
+.home img{
+    width: 100%;
+    margin-top: 1rem;
 }
 
 .home__buttons{
@@ -43,7 +48,7 @@ h1{
 }
 
 .board{
-    margin: 2rem 0;
+    margin: 1rem 0;
     padding: 1rem;
     background-color: #b7dd65;
 }
