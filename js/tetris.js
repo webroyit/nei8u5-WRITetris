@@ -267,11 +267,7 @@ const colors = [
 
 const grid = createMatrix(12, 20);
 
-const player = {
-    position: {x: 0, y: 0},
-    matrix: null,
-    score: 0
-}
+const player = new Player;
 
 // for keyboard
 document.addEventListener("keydown", event => {
