@@ -146,7 +146,7 @@ function update(time = 0){
 
     // move the shape down by 1 space for every second
     if(dropCounter > dropInterval){
-        playerDrop();
+        player.playerDrop();
     }
 
     draw();
@@ -185,49 +185,6 @@ function playerReset(){
         grid.forEach(row => row.fill(0));
         player.score = 0;
         updateScore();
-    }
-}
-
-function playerDrop(){
-    player.position.y++;
-
-    // when it hit the ground, it add the shape to the grid
-    if(collide(grid, player)){
-        player.position.y--;
-        merge(grid, player)
-        playerReset();
-        gridSweep();
-        updateScore();
-    }
-    // reset the drop down timer
-    dropCounter = 0;
-}
-
-function playerMove(dir){
-    player.position.x += dir;
-
-    // move the shape back if it hits the wall or other shape when moving to the left or right
-    if(collide(grid, player)){
-        player.position.x -= dir;
-    }
-}
-
-function playerRotate(dir){
-    const pos = player.position.x;
-    let offset = 1;
-    rotate(player.matrix, dir);
-
-    while(collide(grid, player)){
-        player.position.x += offset;
-        // check if there is collision when rotating
-        offset = -(offset + (offset > 0 ? 1 : -1));
-
-        // move back the shape
-        if(offset > player.matrix[0].length){
-            rotate(player.matrix, -dir);
-            player.position.x = pos;
-            return;
-        }
     }
 }
 
@@ -273,31 +230,31 @@ const player = new Player;
 document.addEventListener("keydown", event => {
     // move left
     if(event.keyCode === 37){
-        playerMove(-1);
+        player.playerMove(-1);
     }
     // move right
     else if(event.keyCode === 39){
-        playerMove(1);
+        player.playerMove(1);
     }
     // move down
     else if(event.keyCode === 40){
-        playerDrop();
+        player.playerDrop();
     }
     // q - rotate the shape to the left
     else if(event.keyCode === 81){
-        playerRotate(-1);
+        player.playerRotate(-1);
     }
     // w - rotate the shape to the right
     else if(event.keyCode === 87){
-        playerRotate(1);
+        player.playerRotate(1);
     }
 })
 
-buttonLeft.addEventListener('click', () => playerMove(-1));
-buttonDown.addEventListener('click', () => playerDrop());
-buttonRight.addEventListener('click', () => playerMove(1));
-buttonRotateLeft.addEventListener('click', () => playerRotate(-1));
-buttonRotateRight.addEventListener('click', () => playerRotate(1));
+buttonLeft.addEventListener('click', () => player.playerMove(-1));
+buttonDown.addEventListener('click', () => player.playerDrop());
+buttonRight.addEventListener('click', () => player.playerMove(1));
+buttonRotateLeft.addEventListener('click', () => player.playerRotate(-1));
+buttonRotateRight.addEventListener('click', () => player.playerRotate(1));
 
 playerReset();
 update();
