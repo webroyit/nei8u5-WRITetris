@@ -1,5 +1,8 @@
 class Player{
     constructor(){
+        this.dropCounter = 0;
+        this.dropInterval = 1000;
+
         this.position = {x: 0, y: 0};
         this.matrix = null;
         this.score = 0;
@@ -17,7 +20,7 @@ class Player{
             updateScore();
         }
         // reset the drop down timer
-        dropCounter = 0;
+        this.dropCounter = 0;
     }
 
     playerMove(dir){
@@ -45,6 +48,15 @@ class Player{
                 this.position.x = pos;
                 return;
             }
+        }
+    }
+
+    playerUpdate(deltaTime){
+        this.dropCounter += deltaTime;
+
+        // move the shape down by 1 space for every second
+        if(this.dropCounter > this.dropInterval){
+            this.playerDrop();
         }
     }
 }

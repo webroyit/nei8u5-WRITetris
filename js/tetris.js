@@ -1,6 +1,4 @@
 let lastTime = 0;
-let dropCounter = 0;
-let dropInterval = 1000;
 
 const buttonLeft = document.getElementById("button-left");
 const buttonDown = document.getElementById("button-down");
@@ -142,13 +140,8 @@ function update(time = 0){
     // keep track of time
     const deltaTime = time - lastTime;
     lastTime = time;
-    dropCounter += deltaTime;
-
-    // move the shape down by 1 space for every second
-    if(dropCounter > dropInterval){
-        player.playerDrop();
-    }
-
+    
+    player.playerUpdate(deltaTime);
     draw();
 
     // update the dom
@@ -217,7 +210,7 @@ const colors = [
     "#e066ff",
     "#ff66a3",
     "#ff5c33",
-    "#ffff00",
+    "#e9eb14",
     "#00cc00",
     "#5c8a8a"
 ]
