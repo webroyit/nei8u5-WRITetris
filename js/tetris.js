@@ -27,17 +27,6 @@ function collide(grid, player){
     return false;
 }
 
-// save the shape
-function createMatrix(w, h){
-    const matrixList = [];
-
-    while(h--){
-        matrixList.push(new Array(w).fill(0));
-    }
-
-    return matrixList;
-}
-
 // shape layout
 function createPiece(type){
     if(type === "T"){
@@ -97,7 +86,7 @@ function draw(){
     context.fillStyle = "#e6f2ff";   // add color
     context.fillRect(0, 0, canvas.width, canvas.height);    // add sizes to make a rectangle shape
 
-    drawMatrix(grid, {x: 0, y: 0});
+    drawMatrix(grid.matrix, {x: 0, y: 0});
     drawMatrix(player.matrix, player.position);
 }
 
@@ -113,27 +102,6 @@ function drawMatrix(matrix, offset){
             }
         });
     });
-}
-
-// clear the row if it filled
-function gridSweep(){
-    let rowCount = 1;
-    outer: for(let y = grid.length - 1; y > 0; --y){
-        for(let x = 0; x < grid[y].length; ++x){
-            if(grid[y][x] === 0){
-                // goes to the next row if it not filled
-                continue outer;
-            }
-        }
-        // remove that row and add a new empty row to the top
-        const row = grid.splice(y, 1)[0].fill(0);
-        grid.unshift(row);
-        ++y;
-
-        // give the player the point
-        player.score += rowCount * 10;
-        rowCount *= 2;
-    }
 }
 
 function update(time = 0){
@@ -154,11 +122,11 @@ function updateScore(){
 }
 
 // add the current shape to the grid
-function merge(grid, player){
+function merge(matrix, player){
     player.matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if(value !== 0){
-                grid[y + player.position.y][x + player.position.x] = value;
+                matrix[y + player.position.y][x + player.position.x] = value;
             }
         })
     })
@@ -175,8 +143,7 @@ const colors = [
     "#5c8a8a"
 ]
 
-const grid = createMatrix(12, 20);
-
+const grid = new Grid(12, 20);
 const player = new Player;
 
 // for keyboard

@@ -14,9 +14,9 @@ class Player{
         // when it hit the ground, it add the shape to the grid
         if(collide(grid, this)){
             this.position.y--;
-            merge(grid, this)
+            merge(grid.matrix, this)
             this.playerReset();
-            gridSweep();
+            grid.gridSweep();
             updateScore();
         }
         // reset the drop down timer
@@ -81,11 +81,11 @@ class Player{
 
         // put the new shape piece on the top center of the grid 
         this.position.y = 0;
-        this.position.x = (grid[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
+        this.position.x = (grid.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
 
         // clear the grid 
         if(collide(grid, this)){
-            grid.forEach(row => row.fill(0));
+            grid.clear();
             this.score = 0;
             updateScore();
         }
