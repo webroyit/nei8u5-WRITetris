@@ -164,46 +164,6 @@ function merge(grid, player){
     })
 }
 
-// create random shape piece
-function playerReset(){
-    const pieces = "TLJOSZI";
-    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
-
-    // put the new shape piece on the top center of the grid 
-    player.position.y = 0;
-    player.position.x = (grid[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-
-    // clear the grid 
-    if(collide(grid, player)){
-        grid.forEach(row => row.fill(0));
-        player.score = 0;
-        updateScore();
-    }
-}
-
-function rotate(matrix, dir){
-    // transpose - swap the row and the column
-    for(let y = 0; y < matrix.length; ++y){
-        for(let x = 0; x < y; ++x){
-            [
-                matrix[x][y],
-                matrix[y][x]
-            ] = [
-                matrix[y][x],
-                matrix[x][y]
-            ]
-        }
-    }
-
-    // reverse each row
-    if(dir > 0){
-        matrix.forEach(row => row.reverse());
-    }
-    else{
-        matrix.reverse();
-    }
-}
-
 const colors = [
     null,
     "#6666ff",
@@ -249,5 +209,5 @@ buttonRight.addEventListener('click', () => player.playerMove(1));
 buttonRotateLeft.addEventListener('click', () => player.playerRotate(-1));
 buttonRotateRight.addEventListener('click', () => player.playerRotate(1));
 
-playerReset();
+player.playerReset();
 update();

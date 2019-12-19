@@ -15,7 +15,7 @@ class Player{
         if(collide(grid, this)){
             this.position.y--;
             merge(grid, this)
-            playerReset();
+            this.playerReset();
             gridSweep();
             updateScore();
         }
@@ -35,7 +35,7 @@ class Player{
     playerRotate(dir){
         const pos = this.position.x;
         let offset = 1;
-        rotate(this.matrix, dir);
+        this.rotateMatrix(this.matrix, dir);
     
         while(collide(grid, this)){
             this.position.x += offset;
@@ -44,10 +44,50 @@ class Player{
     
             // move back the shape
             if(offset > this.matrix[0].length){
-                rotate(this.matrix, -dir);
+                this.rotateMatrix(this.matrix, -dir);
                 this.position.x = pos;
                 return;
             }
+        }
+    }
+
+    rotateMatrix(matrix, dir){
+        // transpose - swap the row and the column
+        for(let y = 0; y < matrix.length; ++y){
+            for(let x = 0; x < y; ++x){
+                [
+                    matrix[x][y],
+                    matrix[y][x]
+                ] = [
+                    matrix[y][x],
+                    matrix[x][y]
+                ]
+            }
+        }
+    
+        // reverse each row
+        if(dir > 0){
+            matrix.forEach(row => row.reverse());
+        }
+        else{
+            matrix.reverse();
+        }
+    }
+    
+    // create random shape piece
+    playerReset(){
+        const pieces = "TLJOSZI";
+        this.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+
+        // put the new shape piece on the top center of the grid 
+        this.position.y = 0;
+        this.position.x = (grid[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
+
+        // clear the grid 
+        if(collide(grid, this)){
+            grid.forEach(row => row.fill(0));
+            this.score = 0;
+            updateScore();
         }
     }
 
