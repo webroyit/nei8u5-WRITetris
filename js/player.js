@@ -1,5 +1,8 @@
 class Player{
-    constructor(){
+    constructor(tetris){
+        this.tetris = tetris;
+        this.grid = tetris.grid;
+
         this.dropCounter = 0;
         this.dropInterval = 1000;
 
@@ -15,11 +18,11 @@ class Player{
         this.position.y++;
     
         // when it hit the ground, it add the shape to the grid
-        if(grid.collide(this)){
+        if(this.grid.collide(this)){
             this.position.y--;
-            grid.merge(this);
+            this.grid.merge(this);
             this.playerReset();
-            grid.gridSweep();
+            this.grid.gridSweep();
             updateScore();
         }
         // reset the drop down timer
@@ -30,7 +33,7 @@ class Player{
         this.position.x += dir;
     
         // move the shape back if it hits the wall or other shape when moving to the left or right
-        if(grid.collide(this)){
+        if(this.grid.collide(this)){
             this.position.x -= dir;
         }
     }
@@ -40,7 +43,7 @@ class Player{
         let offset = 1;
         this.rotateMatrix(this.matrix, dir);
     
-        while(grid.collide(this)){
+        while(this.grid.collide(this)){
             this.position.x += offset;
             // check if there is collision when rotating
             offset = -(offset + (offset > 0 ? 1 : -1));
@@ -84,11 +87,11 @@ class Player{
 
         // put the new shape piece on the top center of the grid 
         this.position.y = 0;
-        this.position.x = (grid.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
+        this.position.x = (this.grid.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
 
         // clear the grid 
-        if(grid.collide(this)){
-            grid.clear();
+        if(this.grid.collide(this)){
+            this.grid.clear();
             this.score = 0;
             updateScore();
         }

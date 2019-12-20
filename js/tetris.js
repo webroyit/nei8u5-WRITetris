@@ -3,6 +3,10 @@ class Tetris{
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.context.scale(20, 20);  // make the shape bigger
+
+        this.grid = new Grid(12, 20);
+        this.player = new Player(this);     // instance of tetris
+
         this.colors = [
             null,
             "#6666ff",
@@ -21,7 +25,7 @@ class Tetris{
             const deltaTime = time - lastTime;
             lastTime = time;
             
-            player.playerUpdate(deltaTime);
+            this.player.playerUpdate(deltaTime);
             this.draw();
         
             // update the dom
@@ -37,8 +41,8 @@ class Tetris{
         this.context.fillStyle = "#e6f2ff";   // add color
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);    // add sizes to make a rectangle shape
 
-        this.drawMatrix(grid.matrix, {x: 0, y: 0});
-        this.drawMatrix(player.matrix, player.position);
+        this.drawMatrix(this.grid.matrix, {x: 0, y: 0});
+        this.drawMatrix(this.player.matrix, this.player.position);
     }
 
     // draw the shape out
