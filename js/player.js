@@ -25,8 +25,8 @@ class Player{
             this.position.y--;
             this.grid.merge(this);
             this.playerReset();
-            this.grid.gridSweep();
-            updateScore();
+            this.score += this.grid.gridSweep();
+            this.tetris.updateScore(this.score);
         }
         // reset the drop down timer
         this.dropCounter = 0;

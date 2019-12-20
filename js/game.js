@@ -57,20 +57,13 @@ function createPiece(type){
     }
 }
 
-// update the player score
-function updateScore(){
-    //document.getElementById('score').innerText = tetris.player.score;
-}
-
 const playerElements = document.querySelectorAll(".player");
 
 const tetrisList = [];
 
 // loop through each player
 [...playerElements].forEach(element => {
-    const canvas = element.querySelector("canvas");
-    const tetris = new Tetris(canvas);
-
+    const tetris = new Tetris(element);
     tetrisList.push(tetris);
 });
 
