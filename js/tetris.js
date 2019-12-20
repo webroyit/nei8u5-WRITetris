@@ -12,21 +12,6 @@ const context = canvas.getContext("2d");
 // make the shape bigger
 context.scale(20, 20);
 
-function collide(grid, player){
-    const [mtrix, pos] = [player.matrix, player.position];
-
-    for(let y = 0; y < mtrix.length; ++y){
-        for(let x = 0; x < mtrix.length; ++x){
-            // check if the shape in the grid exist
-            if(mtrix[y][x] !== 0 && (grid[y + pos.y] && grid[y + pos.y][x + pos.x]) !== 0){
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 // shape layout
 function createPiece(type){
     if(type === "T"){
@@ -119,17 +104,6 @@ function update(time = 0){
 // update the player score
 function updateScore(){
     document.getElementById('score').innerText = player.score;
-}
-
-// add the current shape to the grid
-function merge(matrix, player){
-    player.matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if(value !== 0){
-                matrix[y + player.position.y][x + player.position.x] = value;
-            }
-        })
-    })
 }
 
 const colors = [

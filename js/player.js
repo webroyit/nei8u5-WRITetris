@@ -12,9 +12,9 @@ class Player{
         this.position.y++;
     
         // when it hit the ground, it add the shape to the grid
-        if(collide(grid, this)){
+        if(grid.collide(this)){
             this.position.y--;
-            merge(grid.matrix, this)
+            grid.merge(this);
             this.playerReset();
             grid.gridSweep();
             updateScore();
@@ -27,7 +27,7 @@ class Player{
         this.position.x += dir;
     
         // move the shape back if it hits the wall or other shape when moving to the left or right
-        if(collide(grid, this)){
+        if(grid.collide(this)){
             this.position.x -= dir;
         }
     }
@@ -37,7 +37,7 @@ class Player{
         let offset = 1;
         this.rotateMatrix(this.matrix, dir);
     
-        while(collide(grid, this)){
+        while(grid.collide(this)){
             this.position.x += offset;
             // check if there is collision when rotating
             offset = -(offset + (offset > 0 ? 1 : -1));
@@ -84,7 +84,7 @@ class Player{
         this.position.x = (grid.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
 
         // clear the grid 
-        if(collide(grid, this)){
+        if(grid.collide(this)){
             grid.clear();
             this.score = 0;
             updateScore();

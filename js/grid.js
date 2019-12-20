@@ -9,8 +9,36 @@ class Grid{
         this.matrix = matrix;
     }
 
+    // clear the row
     clear(){
         this.matrix.forEach(row => row.fill(0));
+    }
+
+    // check if the shape touch the wall or other shape
+    collide(player){
+        const [mtrix, pos] = [player.matrix, player.position];
+    
+        for(let y = 0; y < mtrix.length; ++y){
+            for(let x = 0; x < mtrix.length; ++x){
+                // check if the shape in the grid exist
+                if(mtrix[y][x] !== 0 && (this.matrix[y + pos.y] && this.matrix[y + pos.y][x + pos.x]) !== 0){
+                    return true;
+                }
+            }
+        }
+    
+        return false;
+    }
+
+    // add the current shape to the grid
+    merge(player){
+        player.matrix.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if(value !== 0){
+                    this.matrix[y + player.position.y][x + player.position.x] = value;
+                }
+            })
+        })
     }
 
     // clear the row if it filled
