@@ -113,8 +113,8 @@ const keyListener = event => {
 document.addEventListener("keydown", keyListener);
 document.addEventListener("keyup", keyListener);
 
-// buttonLeft.addEventListener('click', () => tetris.player.playerMove(-1));
-// buttonDown.addEventListener('click', () => tetris.player.playerDrop());
-// buttonRight.addEventListener('click', () => tetris.player.playerMove(1));
-// buttonRotateLeft.addEventListener('click', () => tetris.player.playerRotate(-1));
-// buttonRotateRight.addEventListener('click', () => tetris.player.playerRotate(1));
+buttonLeft.addEventListener('click', () => tetrisList[0].player.playerMove(-1));
+buttonDown.addEventListener('click', () => tetrisList[0].player.playerDrop());
+buttonRight.addEventListener('click', () => tetrisList[0].player.playerMove(1));
+buttonRotateLeft.addEventListener('click', () => tetrisList[0].player.playerRotate(-1));
+buttonRotateRight.addEventListener('click', () => tetrisList[0].player.playerRotate(1));
