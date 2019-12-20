@@ -62,12 +62,21 @@ function updateScore(){
     document.getElementById('score').innerText = tetris.player.score;
 }
 
-const canvas = document.getElementById("tetris");
-const tetris = new Tetris(canvas);
+const playerElements = document.querySelectorAll(".player");
+
+const tetrisList = [];
+
+// loop through each player
+[...playerElements].forEach(element => {
+    const canvas = element.querySelector("canvas");
+    const tetris = new Tetris(canvas);
+
+    tetrisList.push(tetris);
+});
 
 // for keyboard
 document.addEventListener("keydown", event => {
-    const player = tetris.player;
+    const player = tetrisList[0].player;
     // move left
     if(event.keyCode === 37){
         player.playerMove(-1);
@@ -90,8 +99,8 @@ document.addEventListener("keydown", event => {
     }
 })
 
-buttonLeft.addEventListener('click', () => tetris.player.playerMove(-1));
-buttonDown.addEventListener('click', () => tetris.player.playerDrop());
-buttonRight.addEventListener('click', () => tetris.player.playerMove(1));
-buttonRotateLeft.addEventListener('click', () => tetris.player.playerRotate(-1));
-buttonRotateRight.addEventListener('click', () => tetris.player.playerRotate(1));
+// buttonLeft.addEventListener('click', () => tetris.player.playerMove(-1));
+// buttonDown.addEventListener('click', () => tetris.player.playerDrop());
+// buttonRight.addEventListener('click', () => tetris.player.playerMove(1));
+// buttonRotateLeft.addEventListener('click', () => tetris.player.playerRotate(-1));
+// buttonRotateRight.addEventListener('click', () => tetris.player.playerRotate(1));
