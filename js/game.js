@@ -65,37 +65,13 @@ function createPiece(type){
     }
 }
 
-// add the shape to the board
-function draw(){
-    // styles the context
-    context.fillStyle = "#e6f2ff";   // add color
-    context.fillRect(0, 0, canvas.width, canvas.height);    // add sizes to make a rectangle shape
-
-    drawMatrix(grid.matrix, {x: 0, y: 0});
-    drawMatrix(player.matrix, player.position);
-}
-
-// draw the shape out
-function drawMatrix(matrix, offset){
-    matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if(value !== 0){
-                context.fillStyle = colors[value];
-                // x for left
-                // y for top
-                context.fillRect(x + offset.x, y + offset.y, 1, 1);
-            }
-        });
-    });
-}
-
 function update(time = 0){
     // keep track of time
     const deltaTime = time - lastTime;
     lastTime = time;
     
     player.playerUpdate(deltaTime);
-    draw();
+    tetris.draw();
 
     // update the dom
     requestAnimationFrame(update);
@@ -116,7 +92,7 @@ const colors = [
     "#00cc00",
     "#5c8a8a"
 ]
-
+const tetris = new Tetris;
 const grid = new Grid(12, 20);
 const player = new Player;
 
