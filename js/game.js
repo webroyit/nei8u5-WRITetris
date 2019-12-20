@@ -76,27 +76,33 @@ const tetrisList = [];
 
 // for keyboard
 document.addEventListener("keydown", event => {
-    const player = tetrisList[0].player;
-    // move left
-    if(event.keyCode === 37){
-        player.playerMove(-1);
-    }
-    // move right
-    else if(event.keyCode === 39){
-        player.playerMove(1);
-    }
-    // move down
-    else if(event.keyCode === 40){
-        player.playerDrop();
-    }
-    // q - rotate the shape to the left
-    else if(event.keyCode === 81){
-        player.playerRotate(-1);
-    }
-    // w - rotate the shape to the right
-    else if(event.keyCode === 87){
-        player.playerRotate(1);
-    }
+    [
+        [37, 39, 40, 79, 80], // [ArrowLeft, ArrowRight, ArrowDown, o, p]
+        [90, 67, 88, 65, 83]  // [z, c, x, a, s]
+    ].forEach((key, index) => {
+        const player = tetrisList[index].player;
+        // move left
+        if(event.keyCode === key[0]){
+            player.playerMove(-1);
+        }
+        // move right
+        else if(event.keyCode === key[1]){
+            player.playerMove(1);
+        }
+        // move down
+        else if(event.keyCode === key[2]){
+            player.playerDrop();
+        }
+        // q - rotate the shape to the left
+        else if(event.keyCode === key[3]){
+            player.playerRotate(-1);
+        }
+        // w - rotate the shape to the right
+        else if(event.keyCode === key[4]){
+            player.playerRotate(1);
+        }
+    })
+    
 })
 
 // buttonLeft.addEventListener('click', () => tetris.player.playerMove(-1));
