@@ -1,5 +1,3 @@
-let lastTime = 0;
-
 const buttonLeft = document.getElementById("button-left");
 const buttonDown = document.getElementById("button-down");
 const buttonRight = document.getElementById("button-right");
@@ -65,18 +63,6 @@ function createPiece(type){
     }
 }
 
-function update(time = 0){
-    // keep track of time
-    const deltaTime = time - lastTime;
-    lastTime = time;
-    
-    player.playerUpdate(deltaTime);
-    tetris.draw();
-
-    // update the dom
-    requestAnimationFrame(update);
-}
-
 // update the player score
 function updateScore(){
     document.getElementById('score').innerText = player.score;
@@ -92,9 +78,10 @@ const colors = [
     "#00cc00",
     "#5c8a8a"
 ]
-const tetris = new Tetris;
+
 const grid = new Grid(12, 20);
 const player = new Player;
+const tetris = new Tetris;
 
 // for keyboard
 document.addEventListener("keydown", event => {
@@ -125,6 +112,3 @@ buttonDown.addEventListener('click', () => player.playerDrop());
 buttonRight.addEventListener('click', () => player.playerMove(1));
 buttonRotateLeft.addEventListener('click', () => player.playerRotate(-1));
 buttonRotateRight.addEventListener('click', () => player.playerRotate(1));
-
-player.playerReset();
-update();

@@ -6,6 +6,9 @@ class Player{
         this.position = {x: 0, y: 0};
         this.matrix = null;
         this.score = 0;
+
+        // to fix that matrix is null
+        this.playerReset();
     }
 
     playerDrop(){
