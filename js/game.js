@@ -4,12 +4,6 @@ const buttonRight = document.getElementById("button-right");
 const buttonRotateLeft = document.getElementById("button-rotateLeft");
 const buttonRotateRight = document.getElementById("button-rotateRight");
 
-const canvas = document.getElementById("tetris");
-const context = canvas.getContext("2d");
-
-// make the shape bigger
-context.scale(20, 20);
-
 // shape layout
 function createPiece(type){
     if(type === "T"){
@@ -68,20 +62,10 @@ function updateScore(){
     document.getElementById('score').innerText = player.score;
 }
 
-const colors = [
-    null,
-    "#6666ff",
-    "#e066ff",
-    "#ff66a3",
-    "#ff5c33",
-    "#e9eb14",
-    "#00cc00",
-    "#5c8a8a"
-]
-
 const grid = new Grid(12, 20);
 const player = new Player;
-const tetris = new Tetris;
+const canvas = document.getElementById("tetris");
+const tetris = new Tetris(canvas);
 
 // for keyboard
 document.addEventListener("keydown", event => {

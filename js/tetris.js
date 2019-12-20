@@ -1,5 +1,19 @@
 class Tetris{
-    constructor(){
+    constructor(canvas){
+        this.canvas = canvas;
+        this.context = canvas.getContext("2d");
+        this.context.scale(20, 20);  // make the shape bigger
+        this.colors = [
+            null,
+            "#6666ff",
+            "#e066ff",
+            "#ff66a3",
+            "#ff5c33",
+            "#e9eb14",
+            "#00cc00",
+            "#5c8a8a"
+        ];
+
         let lastTime = 0;
 
         const update = (time = 0) => {
@@ -20,8 +34,8 @@ class Tetris{
     // add the shape to the board
     draw(){
         // styles the context
-        context.fillStyle = "#e6f2ff";   // add color
-        context.fillRect(0, 0, canvas.width, canvas.height);    // add sizes to make a rectangle shape
+        this.context.fillStyle = "#e6f2ff";   // add color
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);    // add sizes to make a rectangle shape
 
         this.drawMatrix(grid.matrix, {x: 0, y: 0});
         this.drawMatrix(player.matrix, player.position);
@@ -32,10 +46,10 @@ class Tetris{
         matrix.forEach((row, y) => {
             row.forEach((value, x) => {
                 if(value !== 0){
-                    context.fillStyle = colors[value];
+                    this.context.fillStyle = this.colors[value];
                     // x for left
                     // y for top
-                    context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                    this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
                 }
             });
         });
