@@ -5,6 +5,7 @@ const buttonRotateLeft = document.getElementById("button-rotateLeft");
 const buttonRotateRight = document.getElementById("button-rotateRight");
 
 const tetrisManager = new TetrisManager(document);
+tetrisManager.createPlayer();
 
 const keyListener = event => {
     [
