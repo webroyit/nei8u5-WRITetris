@@ -7,6 +7,11 @@ const buttonRotateRight = document.getElementById("button-rotateRight");
 const tetrisManager = new TetrisManager(document);
 const localTetris = tetrisManager.createPlayer();
 
+const connectionManager = new ConnectionManager();
+
+// connect to the server
+connectionManager.connect("ws://localhost:7000");
+
 const keyListener = event => {
     [
         [37, 39, 40, 79, 80], // [ArrowLeft, ArrowRight, ArrowDown, o, p]
