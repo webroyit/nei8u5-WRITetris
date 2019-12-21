@@ -2,7 +2,7 @@ class TetrisManager{
     constructor(document){
         this.document = document;
         this.template = document.getElementById("player-template");
-        this.instances = [];
+        this.instances = new Set;
         
         const playerElements = document.querySelectorAll(".player");
         // loop through each player
@@ -21,11 +21,18 @@ class TetrisManager{
 
         // create the board
         const tetris = new Tetris(element);
-        this.instances.push(tetris);
+        this.instances.add(tetris);
 
         // show it on the DOM
         this.document.body.appendChild(tetris.element);
 
         return tetris;
+    }
+
+    removePlayer(tetris){
+        this.instances.delete(tetris);
+
+        // remove it from the DOM
+        this.document.body.removeChild(tetris.element);
     }
 }
