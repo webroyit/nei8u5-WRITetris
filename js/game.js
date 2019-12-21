@@ -6,20 +6,14 @@ const buttonRotateRight = document.getElementById("button-rotateRight");
 
 const playerElements = document.querySelectorAll(".player");
 
-const tetrisList = [];
-
-// loop through each player
-[...playerElements].forEach(element => {
-    const tetris = new Tetris(element);
-    tetrisList.push(tetris);
-});
+const tetrisManager = new TetrisManager(document);
 
 const keyListener = event => {
     [
         [37, 39, 40, 79, 80], // [ArrowLeft, ArrowRight, ArrowDown, o, p]
         [90, 67, 88, 65, 83]  // [z, c, x, a, s]
     ].forEach((key, index) => {
-        const player = tetrisList[index].player;
+        const player = tetrisManager.instances[index].player;
 
         // prevent calling the function twice
         if(event.type === "keydown"){
