@@ -96,7 +96,7 @@ class Player{
         if(this.grid.collide(this)){
             this.grid.clear();
             this.score = 0;
-            updateScore();
+            this.tetris.updateScore(this.score);
         }
     }
 
