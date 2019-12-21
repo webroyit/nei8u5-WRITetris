@@ -10,14 +10,14 @@
 <body>
     <main class="container">
         <div class="game">
-            <div class="player">
-                <canvas id="tetris" width="240" height="400"></canvas>
-                <p class="board__score"><strong>Score</strong> - <span id="score">0</span></p>
-            </div>
-            <div class="player">
-                <canvas id="tetris" width="240" height="400"></canvas>
-                <p class="board__score"><strong>Score</strong> - <span id="score">0</span></p>
-            </div>
+            <!-- template means that the content inside will not be accessible by the browser before it is imported into the document -->
+            <template id="player-template">
+                <div class="player">
+                    <canvas id="tetris" width="240" height="400"></canvas>
+                    <p class="board__score"><strong>Score</strong> - <span id="score">0</span></p>
+                </div>
+            </template>
+            
         </div>
 
         <div class="controller">
