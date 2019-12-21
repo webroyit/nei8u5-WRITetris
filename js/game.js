@@ -5,14 +5,14 @@ const buttonRotateLeft = document.getElementById("button-rotateLeft");
 const buttonRotateRight = document.getElementById("button-rotateRight");
 
 const tetrisManager = new TetrisManager(document);
-tetrisManager.createPlayer();
+const localTetris = tetrisManager.createPlayer();
 
 const keyListener = event => {
     [
         [37, 39, 40, 79, 80], // [ArrowLeft, ArrowRight, ArrowDown, o, p]
         [90, 67, 88, 65, 83]  // [z, c, x, a, s]
     ].forEach((key, index) => {
-        const player = tetrisManager.instances[index].player;
+        const player = localTetris.player;
 
         // prevent calling the function twice
         if(event.type === "keydown"){
@@ -53,8 +53,8 @@ const keyListener = event => {
 document.addEventListener("keydown", keyListener);
 document.addEventListener("keyup", keyListener);
 
-buttonLeft.addEventListener('click', () => tetrisList[0].player.playerMove(-1));
-buttonDown.addEventListener('click', () => tetrisList[0].player.playerDrop());
-buttonRight.addEventListener('click', () => tetrisList[0].player.playerMove(1));
-buttonRotateLeft.addEventListener('click', () => tetrisList[0].player.playerRotate(-1));
-buttonRotateRight.addEventListener('click', () => tetrisList[0].player.playerRotate(1));
+buttonLeft.addEventListener('click', () => localTetris.player.playerMove(-1));
+buttonDown.addEventListener('click', () => localTetris.player.playerDrop());
+buttonRight.addEventListener('click', () => localTetris.player.playerMove(1));
+buttonRotateLeft.addEventListener('click', () => localTetris.player.playerRotate(-1));
+buttonRotateRight.addEventListener('click', () => localTetris.player.playerRotate(1));
