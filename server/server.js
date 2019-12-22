@@ -10,6 +10,13 @@ class Session{
     }
 }
 
+class Client{
+    constructor(conn){
+        this.conn = conn;
+        this.session = null;
+    }
+}
+
 // create random ID
 function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz0123456789"){
     let id = "";
@@ -23,6 +30,7 @@ function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz0123456789"){
 // start the websocket
 server.on("connection", conn => {
     console.log("Websocket Online");
+    const client = new Client(conn);
 
     conn.on("message", msg => {
         console.log("Message received", msg);
