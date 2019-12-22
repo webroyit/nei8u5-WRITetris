@@ -10,6 +10,16 @@ class Session{
     }
 }
 
+// create random ID
+function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz0123456789"){
+    let id = "";
+    while(len--){
+        id += chars[Math.random() * chars.length | 0];
+    }
+
+    return id;
+}
+
 // start the websocket
 server.on("connection", conn => {
     console.log("Websocket Online");
@@ -18,7 +28,8 @@ server.on("connection", conn => {
         console.log("Message received", msg);
 
         if(msg === "create-session"){
-            const session = new Session("foobar");
+            const id = createId();
+            const session = new Session(id);
             sessions.set(session.id, session);
             console.log(sessions);
         }
