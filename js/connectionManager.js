@@ -8,14 +8,30 @@ class ConnectionManager{
 
         this.conn.addEventListener("open", () => {
             console.log("Connection Success");
-
-            this.send({ type: "create-session" });
+            this.initSession();
         });
 
         this.conn.addEventListener("message", event => {
             console.log("Recevied Message", event.data);
             this.receive(event.data);
         });
+    }
+
+    initSession(){
+        // get the ID from the url
+        const sessionId = window.location.hash.split("#")[1];
+
+        if(sessionId){
+            // join another player room
+            this.send({
+                type: "join-session",
+                id: sessionId
+            });
+        }
+        else{
+            // create a new room
+            this.send({ type: "create-session" });
+        }
     }
 
     receive(msg){

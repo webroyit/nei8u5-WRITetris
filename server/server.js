@@ -36,6 +36,12 @@ server.on("connection", conn => {
                 id: session.id
             });
         }
+        else if(data.type === "join-session"){
+            const session = sessions.get(data.id);
+            session.join(client);
+        }
+
+        console.log("Sessions", sessions);
     })
 
     conn.on("close", () => {
