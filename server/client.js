@@ -4,7 +4,9 @@ class Client{
         this.session = null;
     }
 
-    send(msg){
+    send(data){
+        // convert the data into JSON
+        const msg = JSON.stringify(data);
         console.log(`Send Message ${msg}`);
         this.conn.send(msg, function ack(err){
             if(err){
