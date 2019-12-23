@@ -7,6 +7,23 @@ const sessions = new Map;
 class Session{
     constructor(id){
         this.id = id;
+        this.clients = new Set;
+    }
+
+    join(client){
+        if(client.session){
+            throw new Error("Client already in session");
+        }
+        this.clients.add(client);
+        client.session = this;
+    }
+
+    leave(client){
+        if(client.session !== this){
+            throw new Error("Client not in session");
+        }
+        this.clients.delete(client);
+        client.session = null;
     }
 }
 
@@ -38,6 +55,7 @@ server.on("connection", conn => {
         if(msg === "create-session"){
             const id = createId();
             const session = new Session(id);
+            session.join(client);
             sessions.set(session.id, session);
             console.log(sessions);
         }
@@ -45,5 +63,13 @@ server.on("connection", conn => {
 
     conn.on("close", () => {
         console.log("Connection Closed");
+        const session = client.session;
+
+        if(session){
+            session.leave(client);
+            if(session.clients.size === 0){
+                sessions.delete(session.id);
+            }
+        }
     })
 });
