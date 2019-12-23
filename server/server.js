@@ -23,6 +23,7 @@ server.on("connection", conn => {
 
     conn.on("message", msg => {
         console.log("Message received", msg);
+        // convert the data into object
         const data = JSON.parse(msg);
 
         if(data.type === "create-session"){
