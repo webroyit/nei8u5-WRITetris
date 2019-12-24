@@ -7,11 +7,13 @@ class Grid{
         }
 
         this.matrix = matrix;
+        this.events = new Events;
     }
 
     // clear the row
     clear(){
         this.matrix.forEach(row => row.fill(0));
+        this.events.emit("matrix", this.matrix);
     }
 
     // check if the shape touch the wall or other shape
@@ -37,8 +39,9 @@ class Grid{
                 if(value !== 0){
                     this.matrix[y + player.position.y][x + player.position.x] = value;
                 }
-            })
-        })
+            });
+        });
+        this.events.emit("matrix", this.matrix);
     }
 
     // clear the row if it filled
@@ -61,6 +64,7 @@ class Grid{
             score += rowCount * 10;
             rowCount *= 2;
         }
+        this.events.emit("matrix", this.matrix);
         return score;
     }
 }

@@ -9,6 +9,18 @@ class Tetris{
         this.grid = new Grid(12, 20);
         this.player = new Player(this);     // instance of tetris
 
+        this.player.events.listen("score", score => {
+            this.updateScore(score);
+        });
+
+        this.player.events.listen("pos", pos => {
+            console.log("Change position", pos);
+        });
+
+        this.player.events.listen("matrix", matrix => {
+            console.log("Change martrix", matrix);
+        });
+
         this.colors = [
             null,
             "#6666ff",

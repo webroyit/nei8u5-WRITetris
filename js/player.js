@@ -3,6 +3,8 @@ class Player{
         this.DROP_SLOW = 1000;
         this.DROP_FAST = 50;
 
+        this.events = new Events();
+
         this.tetris = tetris;
         this.grid = tetris.grid;
 
@@ -72,6 +74,8 @@ class Player{
 
     playerDrop(){
         this.position.y++;
+        // reset the drop down timer
+        this.dropCounter = 0;
     
         // when it hit the ground, it add the shape to the grid
         if(this.grid.collide(this)){
@@ -79,10 +83,10 @@ class Player{
             this.grid.merge(this);
             this.playerReset();
             this.score += this.grid.gridSweep();
-            this.tetris.updateScore(this.score);
+            this.events.emit("score", this.score);
+            return;
         }
-        // reset the drop down timer
-        this.dropCounter = 0;
+        this.events.emit("pos", this.position);
     }
 
     playerMove(dir){
@@ -91,7 +95,11 @@ class Player{
         // move the shape back if it hits the wall or other shape when moving to the left or right
         if(this.grid.collide(this)){
             this.position.x -= dir;
+            // to prevent sending update to the server
+            return;
         }
+
+        this.events.emit("pos", this.position);
     }
 
     playerRotate(dir){
@@ -111,6 +119,8 @@ class Player{
                 return;
             }
         }
+
+        this.events.emit("matrix", this.matrix);
     }
 
     rotateMatrix(matrix, dir){
@@ -149,8 +159,11 @@ class Player{
         if(this.grid.collide(this)){
             this.grid.clear();
             this.score = 0;
-            this.tetris.updateScore(this.score);
+            this.events.emit("score", this.score);
         }
+
+        this.events.emit("pos", this.position);
+        this.events.emit("matrix", this.matrix);
     }
 
     playerUpdate(deltaTime){
