@@ -38,6 +38,21 @@ function getSession(id){
     return sessions.get(id);
 }
 
+// send a message to all group
+function broadcastSession(session){
+    const clients = [...session.clients];
+
+    clients.forEach(client => {
+        client.send({
+            type: "session-broadcast",
+            peers: {
+                you: client.id,
+                clients: clients.map(client => client.id)
+            }
+        });
+    })
+}
+
 // start the websocket
 server.on("connection", conn => {
     console.log("Websocket Online");
@@ -59,6 +74,8 @@ server.on("connection", conn => {
         else if(data.type === "join-session"){
             const session = getSession(data.id) || createSession(data.id);
             session.join(client);
+
+            broadcastSession(session);
         }
 
         console.log("Sessions", sessions);
@@ -74,5 +91,7 @@ server.on("connection", conn => {
                 sessions.delete(session.id);
             }
         }
+
+        broadcastSession(session);
     })
 });
