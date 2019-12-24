@@ -22,7 +22,7 @@ class Tetris{
 
         let lastTime = 0;
 
-        const update = (time = 0) => {
+        this._update = (time = 0) => {
             // keep track of time
             const deltaTime = time - lastTime;
             lastTime = time;
@@ -31,10 +31,9 @@ class Tetris{
             this.draw();
         
             // update the dom
-            requestAnimationFrame(update);
+            requestAnimationFrame(this._update);
         };
-        
-        update();
+
         this.updateScore(0);
     }
 
@@ -60,6 +59,10 @@ class Tetris{
                 }
             });
         });
+    }
+
+    run(){
+        this._update();
     }
 
     // update the player score
