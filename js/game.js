@@ -7,7 +7,7 @@ const buttonRotateRight = document.getElementById("button-rotateRight");
 const tetrisManager = new TetrisManager(document);
 const localTetris = tetrisManager.createPlayer();
 
-const connectionManager = new ConnectionManager();
+const connectionManager = new ConnectionManager(tetrisManager);
 
 // connect to the server
 connectionManager.connect("ws://localhost:7000");
