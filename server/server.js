@@ -16,6 +16,10 @@ function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz0123456789"){
     return id;
 }
 
+function createClient(conn, id = createId()){
+    return new Client(conn, id);
+}
+
 // (id = createId()) means that if there is no id, it will excute this function
 function createSession(id = createId()){
     if(sessions.has(id)){
@@ -37,7 +41,7 @@ function getSession(id){
 // start the websocket
 server.on("connection", conn => {
     console.log("Websocket Online");
-    const client = new Client(conn);
+    const client = createClient(conn);
 
     conn.on("message", msg => {
         console.log("Message received", msg);

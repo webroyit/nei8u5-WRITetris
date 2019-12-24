@@ -1,7 +1,8 @@
 class Client{
-    constructor(conn){
+    constructor(conn, id){
         this.conn = conn;
         this.session = null;
+        this.id = id;
     }
 
     send(data){
