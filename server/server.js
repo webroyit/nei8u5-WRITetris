@@ -16,6 +16,24 @@ function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz0123456789"){
     return id;
 }
 
+// (id = createId()) means that if there is no id, it will excute this function
+function createSession(id = createId()){
+    if(sessions.has(id)){
+        throw new Error(`Session ${id} already exists`);
+    }
+
+    const session = new Session(id);
+    console.log("Creating Session", session);
+
+    sessions.set(id, session);
+
+    return session;
+}
+
+function getSession(id){
+    return sessions.get(id);
+}
+
 // start the websocket
 server.on("connection", conn => {
     console.log("Websocket Online");
@@ -27,17 +45,15 @@ server.on("connection", conn => {
         const data = JSON.parse(msg);
 
         if(data.type === "create-session"){
-            const id = createId();
-            const session = new Session(id);
+            const session = createSession();
             session.join(client);
-            sessions.set(session.id, session);
             client.send({
                 type: "session-created",
                 id: session.id
             });
         }
         else if(data.type === "join-session"){
-            const session = sessions.get(data.id);
+            const session = getSession(data.id) || createSession(data.id);
             session.join(client);
         }
 
