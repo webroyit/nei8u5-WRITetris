@@ -53,6 +53,18 @@ class ConnectionManager{
                 });
             });
         });
+
+        const grid = local.grid;
+
+        ["matrix"].forEach(prop => {
+            grid.events.listen(prop, value => {
+                this.send({
+                    type: "state-update",
+                    fragment: "grid",
+                    grid: [prop, value]
+                });
+            });
+        });
     }
 
     // add another board if a new player join
