@@ -86,6 +86,8 @@ server.on("connection", conn => {
             broadcastSession(session);
         }
         else if(data.type === "state-update"){
+            const [prop, value] = data.state;
+            client.state[data.fragment][prop] = value;
             client.broadcast(data);
         }
     })

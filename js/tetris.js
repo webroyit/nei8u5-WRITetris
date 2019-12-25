@@ -77,7 +77,7 @@ class Tetris{
             },
             player: {
                 matrix: this.player.matrix,
-                pos: this.player.position,
+                position: this.player.position,
                 score: this.player.score,
             }
         }
