@@ -26,16 +26,19 @@ class ConnectionManager{
         // get the ID from the url
         const sessionId = window.location.hash.split("#")[1];
 
+        const state = this.localTetris.serialize();
+
         if(sessionId){
             // join another player room
             this.send({
                 type: "join-session",
-                id: sessionId
+                id: sessionId,
+                state
             });
         }
         else{
             // create a new room
-            this.send({ type: "create-session" });
+            this.send({ type: "create-session", state });
         }
     }
 
