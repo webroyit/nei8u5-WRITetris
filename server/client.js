@@ -5,6 +5,21 @@ class Client{
         this.id = id;
     }
 
+    broadcast(data){
+        if(!this.session){
+            throw new Error("No session to broadcast");
+        }
+
+        data.clientId = this.id;
+
+        this.session.clients.forEach(client => {
+            if(this === client){
+                return;
+            }
+            client.send(data);
+        })
+    }
+
     send(data){
         // convert the data into JSON string
         const msg = JSON.stringify(data);
