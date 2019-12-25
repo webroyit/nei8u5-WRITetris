@@ -4,6 +4,7 @@ class ConnectionManager{
         this.peers = new Map;
 
         this.tetrisManager = tetrisManager;
+        this.localTetris = [...tetrisManager.instances][0];
     }
 
     connect(address){
@@ -12,6 +13,7 @@ class ConnectionManager{
         this.conn.addEventListener("open", () => {
             console.log("Connection Success");
             this.initSession();
+            this.watchEvents();
         });
 
         this.conn.addEventListener("message", event => {
@@ -35,6 +37,22 @@ class ConnectionManager{
             // create a new room
             this.send({ type: "create-session" });
         }
+    }
+
+    // send the updates to the server
+    watchEvents(){
+        const local = this.localTetris;
+        const player = local.player;
+
+        ["pos", "matrix", "score"].forEach(prop => {
+            player.events.listen(prop, value => {
+                this.send({
+                    type: "state-update",
+                    fragment: "player",
+                    player: [prop, value]
+                });
+            });
+        });
     }
 
     // add another board if a new player join

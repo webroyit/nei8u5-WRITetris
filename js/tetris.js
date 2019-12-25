@@ -13,14 +13,6 @@ class Tetris{
             this.updateScore(score);
         });
 
-        this.player.events.listen("pos", pos => {
-            console.log("Change position", pos);
-        });
-
-        this.player.events.listen("matrix", matrix => {
-            console.log("Change martrix", matrix);
-        });
-
         this.colors = [
             null,
             "#6666ff",
